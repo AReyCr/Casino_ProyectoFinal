@@ -54,9 +54,7 @@ B:\ESCUELA\BACK-END\Casino_ProyectoFinal\Casino_ProyectoFinal\bin\Debug\net6.0\M
 B:\ESCUELA\BACK-END\Casino_ProyectoFinal\Casino_ProyectoFinal\bin\Debug\net6.0\Microsoft.Win32.SystemEvents.dll
 B:\ESCUELA\BACK-END\Casino_ProyectoFinal\Casino_ProyectoFinal\bin\Debug\net6.0\Mono.TextTemplating.dll
 B:\ESCUELA\BACK-END\Casino_ProyectoFinal\Casino_ProyectoFinal\bin\Debug\net6.0\System.CodeDom.dll
-B:\ESCUELA\BACK-END\Casino_ProyectoFinal\Casino_ProyectoFinal\bin\Debug\net6.0\System.Collections.Immutable.dll
 B:\ESCUELA\BACK-END\Casino_ProyectoFinal\Casino_ProyectoFinal\bin\Debug\net6.0\System.Configuration.ConfigurationManager.dll
-B:\ESCUELA\BACK-END\Casino_ProyectoFinal\Casino_ProyectoFinal\bin\Debug\net6.0\System.Diagnostics.DiagnosticSource.dll
 B:\ESCUELA\BACK-END\Casino_ProyectoFinal\Casino_ProyectoFinal\bin\Debug\net6.0\System.Drawing.Common.dll
 B:\ESCUELA\BACK-END\Casino_ProyectoFinal\Casino_ProyectoFinal\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll
 B:\ESCUELA\BACK-END\Casino_ProyectoFinal\Casino_ProyectoFinal\bin\Debug\net6.0\System.Runtime.Caching.dll
