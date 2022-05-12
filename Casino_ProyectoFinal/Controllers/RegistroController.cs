@@ -5,39 +5,39 @@ using Microsoft.EntityFrameworkCore;
 namespace Casino_ProyectoFinal.Controllers
 {
     [ApiController]
-    [Route("api/Participantes")]
-    public class ParticipantesController : ControllerBase
+    [Route("api/Registro")]
+    public class RegistroController : ControllerBase
     {
         private readonly ApplicationDbContext dbContext;
 
-        public ParticipantesController(ApplicationDbContext context)
+        public RegistroController(ApplicationDbContext context)
         {
             this.dbContext = context;
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Participantes>>> Get()
+        public async Task<ActionResult<List<Registro>>> Get()
         {
-            return await dbContext.Participantes.ToListAsync();
+            return await dbContext.Registro.ToListAsync();
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post(Participantes participantes)
+        public async Task<ActionResult> Post(Registro registro)
         {
-            dbContext.Add(participantes);
+            dbContext.Add(registro);
             await dbContext.SaveChangesAsync();
             return Ok();
         }
 
         [HttpPut("{id:int}")]
-        public async Task<ActionResult> Put(Participantes participantes, int id)
+        public async Task<ActionResult> Put(Registro registro, int id)
         {
-            if (participantes.Id != id) 
+            if (registro.Id != id) 
             {
                 return BadRequest("El id del participante no coincide con el establecido en la url");
             }
 
-            dbContext.Update(participantes);
+            dbContext.Update(registro);
             await dbContext.SaveChangesAsync();
             return Ok();
         }
@@ -45,12 +45,12 @@ namespace Casino_ProyectoFinal.Controllers
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> Delete(int id)
         {
-            var exist = await dbContext.Participantes.AnyAsync(x=> x.Id==id);
+            var exist = await dbContext.Registro.AnyAsync(x=> x.Id==id);
             if (!exist)
             {
                 return NotFound();
             }
-            dbContext.Remove(new Participantes()
+            dbContext.Remove(new Registro()
             {
                 Id = id
             });

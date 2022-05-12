@@ -11,20 +11,20 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Casino_ProyectoFinal.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220505164528_Inicial")]
-    partial class Inicial
+    [Migration("20220512013848_Registros")]
+    partial class Registros
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.0-preview.3.22175.1")
+                .HasAnnotation("ProductVersion", "7.0.0-preview.4.22229.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("Casino_ProyectoFinal.Entidades.Participantes", b =>
+            modelBuilder.Entity("Casino_ProyectoFinal.Entidades.Registro", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -37,7 +37,7 @@ namespace Casino_ProyectoFinal.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Participantes");
+                    b.ToTable("Registro");
                 });
 #pragma warning restore 612, 618
         }

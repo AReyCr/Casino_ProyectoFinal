@@ -5,13 +5,13 @@
 namespace Casino_ProyectoFinal.Migrations
 {
     /// <inheritdoc />
-    public partial class Inicial : Migration
+    public partial class Registros : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Participantes",
+                name: "Registro",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -20,7 +20,7 @@ namespace Casino_ProyectoFinal.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Participantes", x => x.Id);
+                    table.PrimaryKey("PK_Registro", x => x.Id);
                 });
         }
 
@@ -28,7 +28,7 @@ namespace Casino_ProyectoFinal.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Participantes");
+                name: "Registro");
         }
     }
 }
