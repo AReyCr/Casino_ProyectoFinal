@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Casino_ProyectoFinal.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220512044742_Rifas")]
-    partial class Rifas
+    [Migration("20220512142041_Participantes")]
+    partial class Participantes
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -38,35 +38,14 @@ namespace Casino_ProyectoFinal.Migrations
                     b.Property<int>("NumeroSeleccion")
                         .HasColumnType("int");
 
-                    b.Property<int>("RegistroId")
-                        .HasColumnType("int");
-
                     b.Property<int>("RifasId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RegistroId");
-
                     b.HasIndex("RifasId");
 
                     b.ToTable("Participantes");
-                });
-
-            modelBuilder.Entity("Casino_ProyectoFinal.Entidades.Registro", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Nombre")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Registro");
                 });
 
             modelBuilder.Entity("Casino_ProyectoFinal.Entidades.Rifas", b =>
@@ -90,19 +69,11 @@ namespace Casino_ProyectoFinal.Migrations
 
             modelBuilder.Entity("Casino_ProyectoFinal.Entidades.Participantes", b =>
                 {
-                    b.HasOne("Casino_ProyectoFinal.Entidades.Registro", "Registro")
-                        .WithMany()
-                        .HasForeignKey("RegistroId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Casino_ProyectoFinal.Entidades.Rifas", "Rifas")
                         .WithMany()
                         .HasForeignKey("RifasId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Registro");
 
                     b.Navigation("Rifas");
                 });

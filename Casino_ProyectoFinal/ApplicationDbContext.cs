@@ -9,7 +9,6 @@ namespace Casino_ProyectoFinal
         {
             
         }
-        public DbSet<Registro> Registro { get; set; }
         public DbSet<Participantes> Participantes { get; set; }
         public DbSet<Rifas> Rifas { get; set; }
 

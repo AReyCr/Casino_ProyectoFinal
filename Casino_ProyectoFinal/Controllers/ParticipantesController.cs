@@ -23,14 +23,21 @@ namespace Casino_ProyectoFinal.Controllers
             return Ok();
         
         }
-        
-        [HttpGet]    // Get para datos relacionados
+
+        [HttpGet]    // Get para datos relacionados ( RIFAS )
+        public async Task<ActionResult<List<Participantes>>> Get()
+        {
+            return await dbContext.Participantes.Include(x => x.Rifas).ToListAsync();
+        }
+
+        /*
+        [HttpGet]    // Get para datos relacionados ( REGISTROS )
         public async Task<ActionResult<List<Participantes>>> Get() 
         {
             return await dbContext.Participantes.Include(x=> x.Registro).ToListAsync();
         }
 
-        /*
+        
         [HttpGet]
         public async Task<ActionResult<List<Participantes>>> Get()     Get para obtencion de datos sin relacion 
         {

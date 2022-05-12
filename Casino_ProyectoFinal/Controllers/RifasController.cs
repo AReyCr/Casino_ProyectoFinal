@@ -15,16 +15,35 @@ namespace Casino_ProyectoFinal.Controllers
             this.dbContext = context;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<List<Rifas>>> Get()
-        {
-            return await dbContext.Rifas.ToListAsync();
-        }
-
         [HttpPost]
         public async Task<ActionResult> Post(Rifas rifas)
         {
             dbContext.Add(rifas);
+            await dbContext.SaveChangesAsync();
+            return Ok();
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<List<Rifas>>> GetAll()
+        {
+            return await dbContext.Rifas.ToListAsync();
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Rifas>> Get(int id)
+        {
+            return await dbContext.Rifas.FirstOrDefaultAsync(x=>x.Id==id);
+        }
+
+        [HttpPut("{id:int}")]
+        public async Task<ActionResult> Put(Rifas rifas, int id)
+        {
+            if (rifas.Id != id)
+            {
+                return BadRequest("Rifa no existente");
+            }
+
+            dbContext.Update(rifas);
             await dbContext.SaveChangesAsync();
             return Ok();
         }
