@@ -28,7 +28,7 @@ namespace Casino_ProyectoFinal.Controllers
             await dbContext.SaveChangesAsync();
             return Ok();
         }
-
+/*
         [HttpPut("{id:int}")]
         public async Task<ActionResult> Put(Registro registro, int id)
         {
@@ -57,7 +57,7 @@ namespace Casino_ProyectoFinal.Controllers
             await dbContext.SaveChangesAsync();
             return Ok();
         }
-
+*/
     }
 
 }

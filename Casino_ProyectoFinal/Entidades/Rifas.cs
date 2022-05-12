@@ -3,6 +3,7 @@
     public class Rifas
     {
         public int Id { get; set; }
-        public List<Participantes> Participantes { get; set; }
+        public string Nombre { get; set;}
+        public int NumerosDisponible { get; set; }
     }
 }
