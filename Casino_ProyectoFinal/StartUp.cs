@@ -8,6 +8,7 @@ namespace Casino_ProyectoFinal
     {
         public StartUp(IConfiguration configration)
         {
+
             Configuration = configration;
 
         }
@@ -21,6 +22,8 @@ namespace Casino_ProyectoFinal
             services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("defaultConnection")));
             
+
+
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen(c =>
             {

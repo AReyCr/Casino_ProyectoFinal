@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Casino_ProyectoFinal.Entidades
 {
-    public class Participantes : IValidatableObject
+    public class Participantes
     {
         public int Id { get; set; }
 

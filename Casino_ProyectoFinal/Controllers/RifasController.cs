@@ -34,6 +34,14 @@ namespace Casino_ProyectoFinal.Controllers
         {
             return await dbContext.Rifas.FirstOrDefaultAsync(x=>x.Id==id);
         }
+        /*
+        [HttpGet("NumerosDisponibles /{id]")]    // Metodo pendiente oara mostrar el listado de numeros disponibles de la r
+        public async Task<ActionResult<Rifas>> Get(int id)
+        {
+            return await dbContext.Rifas.FirstOrDefaultAsync(x => x.Id == id);
+        }
+
+        */
 
         [HttpPut("{id:int}")]
         public async Task<ActionResult> Put(Rifas rifas, int id)
