@@ -30,13 +30,27 @@ namespace Casino_ProyectoFinal
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebAPICasino", Version = "v1" });
             });
         }
+
+        
+
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.Map("/ruta1", app =>
+            {
+                app.Run(async context =>
+                {
+                    await context.Response.WriteAsync("Interceptando las peticiones");
+                });
+            });
+            
+
             if (env.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+
 
             app.UseHttpsRedirection();
 

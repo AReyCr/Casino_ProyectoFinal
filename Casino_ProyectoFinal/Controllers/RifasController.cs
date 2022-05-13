@@ -9,8 +9,9 @@ namespace Casino_ProyectoFinal.Controllers
     public class RifasController : ControllerBase
     {
         private readonly ApplicationDbContext dbContext;
+        private readonly ILogger<RifasController> logger;
 
-        public RifasController(ApplicationDbContext context)
+        public RifasController(ApplicationDbContext context, ILogger<ParticipantesController> logger)
         {
             this.dbContext = context;
         }
@@ -29,10 +30,16 @@ namespace Casino_ProyectoFinal.Controllers
             return await dbContext.Rifas.ToListAsync();
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Rifas>> Get(int id)
+        [HttpGet("Obtener/{id}")]
+        public async Task<ActionResult<Rifas>> Get([FromRoute]int id)
         {
-            return await dbContext.Rifas.FirstOrDefaultAsync(x=>x.Id==id);
+            var rifa = await dbContext.Rifas.FirstOrDefaultAsync(x => x.Id == id);
+            if( rifa == null)
+            { 
+                return NotFound();
+            }
+
+            return rifa;
         }
         /*
         [HttpGet("NumerosDisponibles /{id]")]    // Metodo pendiente oara mostrar el listado de numeros disponibles de la r
