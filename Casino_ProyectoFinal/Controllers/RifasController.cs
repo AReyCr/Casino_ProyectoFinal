@@ -1,4 +1,6 @@
-﻿using Casino_ProyectoFinal.Entidades;
+﻿using AutoMapper;
+using Casino_ProyectoFinal.DTOs;
+using Casino_ProyectoFinal.Entidades;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,29 +12,44 @@ namespace Casino_ProyectoFinal.Controllers
     {
         private readonly ApplicationDbContext dbContext;
         private readonly ILogger<RifasController> logger;
+        private readonly IMapper mapper;
 
-        public RifasController(ApplicationDbContext context, ILogger<RifasController> logger)
+        public RifasController(ApplicationDbContext context, ILogger<RifasController> logger, IMapper mapper)
         {
             this.logger = logger;
             this.dbContext = context;
+            this.mapper = mapper;
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post(Rifas rifas)
+        public async Task<ActionResult> Post([FromBody]RifasDTO rifasDto)
         {
-            dbContext.Add(rifas);
+            var exist = await dbContext.Rifas.AnyAsync(x => x.Nombre == rifasDto.Nombre);
+
+            if (exist)
+            {
+                return BadRequest("Ya existe rifa con ese nombre");
+            }
+
+            var rifa = mapper.Map<Rifas>(rifasDto);
+
+            dbContext.Add(rifa);
             await dbContext.SaveChangesAsync();
-            return Ok();
+
+            var rifasDTO = mapper.Map<GetRifasDTO>(rifa);
+
+            return CreatedAtRoute("ObtonerRifa", new {id=rifa.Id}, rifasDTO);
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Rifas>>> GetAll()
+        public async Task<ActionResult<List<GetRifasDTO>>> GetAll()
         {
-            return await dbContext.Rifas.ToListAsync();
+            var rifas = await dbContext.Rifas.ToListAsync();
+            return mapper.Map<List<GetRifasDTO>>(rifas);
         }
 
-        [HttpGet("Obtener/{id}")]
-        public async Task<ActionResult<Rifas>> Get([FromRoute]int id)
+        [HttpGet("{id:int}", Name = "ObtenerRifa")]
+        public async Task<ActionResult<RifasDTO>> GetById(int id)
         {
             var rifa = await dbContext.Rifas.FirstOrDefaultAsync(x => x.Id == id);
             if( rifa == null)
@@ -40,7 +57,7 @@ namespace Casino_ProyectoFinal.Controllers
                 return NotFound();
             }
            
-            return rifa;
+            return mapper.Map<RifasDTO>(rifa);
         }
         /*
         [HttpGet("NumerosDisponibles /{id]")]    // Metodo pendiente oara mostrar el listado de numeros disponibles de la r
@@ -52,16 +69,28 @@ namespace Casino_ProyectoFinal.Controllers
         */
 
         [HttpPut("{id:int}")]
-        public async Task<ActionResult> Put(Rifas rifas, int id)
+        public async Task<ActionResult> Put(RifasDTO rifasDTO, int id)
         {
-            if (rifas.Id != id)
+            var exist = await dbContext.Rifas.AnyAsync(x=> x.Id == id);
+            var exist2 = await dbContext.Rifas.AnyAsync(x => x.Nombre == rifasDTO.Nombre);
+
+            if (!exist)
             {
                 return BadRequest("Rifa no existente");
             }
 
-            dbContext.Update(rifas);
+            if (!exist2)
+            {
+                return BadRequest("Ya existe rifa con ese nombre");
+            }
+
+            var rifa = mapper.Map<Rifas>(rifasDTO);
+
+            rifa.Id = id;
+
+            dbContext.Update(rifa);
             await dbContext.SaveChangesAsync();
-            return Ok();
+            return NoContent();
         }
 
         [HttpDelete("{id:int}")]

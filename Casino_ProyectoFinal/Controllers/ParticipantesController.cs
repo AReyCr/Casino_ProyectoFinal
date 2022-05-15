@@ -4,6 +4,7 @@ using Casino_ProyectoFinal.Entidades;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace Casino_ProyectoFinal.Controllers
 {
@@ -24,24 +25,29 @@ namespace Casino_ProyectoFinal.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody]Participantes participantes)
+        public async Task<ActionResult> Post([FromBody] ParticipantesDTO participantesDto)
         {
-            var repetido = await dbContext.Participantes.AnyAsync(x => x.NumeroSeleccion == participantes.NumeroSeleccion);
-            var rifa = await dbContext.Participantes.AnyAsync(y => y.RifasId == participantes.RifasId);
+            var repetido = await dbContext.Participantes.AnyAsync(x => x.NumeroSeleccion == participantesDto.NumeroSeleccion);
+            var rifa = await dbContext.Participantes.AnyAsync(y => y.RifasId == participantesDto.RifasId);
 
             if (repetido && rifa)
             {
                 return BadRequest("Numero ya selecionado");
             }
 
-            dbContext.Add(participantes);
+            var participante = mapper.Map<Participantes>(participantesDto);
+
+            dbContext.Add(participante);
             await dbContext.SaveChangesAsync();
-            return Ok();
+
+            var participantesDTO = mapper.Map<GetParticipantesDTO>(participante);
+
+            return CreatedAtRoute("ObtenerParticipantes", new {id=participante.Id}, participantesDTO);
         
         }
 
-        /*
-        [HttpGet]    // Get para datos relacionados ( RIFAS )
+        
+        [HttpGet( Name="ObtenerParticipantes")]    // Get para datos relacionados ( RIFAS )
         
         public async Task<ActionResult<List<GetParticipantesDTO>>> Get()
         {
@@ -51,46 +57,49 @@ namespace Casino_ProyectoFinal.Controllers
             return mapper.Map<List<GetParticipantesDTO>>(participantes);
         }
 
-        
 
-        
+
+        /*
         [HttpGet]    // Get para datos relacionados ( REGISTROS )
         public async Task<ActionResult<List<Participantes>>> Get() 
         {
             return await dbContext.Participantes.Include(x=> x.Registro).ToListAsync();
         }
-        */
         
-        [HttpGet]
+        
+       [HttpGet( Name="ObtenerParticipantes")]
         public async Task<ActionResult<List<GetParticipantesDTO>>> Get()   //  Get para obtencion de datos sin relacion 
         {
             var participantes = await dbContext.Participantes.ToListAsync();
             return mapper.Map<List<GetParticipantesDTO>>(participantes);
-     
+   
         }
-       
+       */
 
         [HttpPut("{id:int}")]
-        public async Task<ActionResult> Put(Participantes participantes, int id)
+        public async Task<ActionResult> Put(ParticipantesDTO participantesDTO, int id)
         {
 
-            var repetido = await dbContext.Participantes.AnyAsync(x => x.NumeroSeleccion == participantes.NumeroSeleccion);
-            var rifa = await dbContext.Participantes.AnyAsync(y => y.RifasId == participantes.RifasId);
+            var repetido = await dbContext.Participantes.AnyAsync(x => x.NumeroSeleccion == participantesDTO.NumeroSeleccion);
+            var rifa = await dbContext.Participantes.AnyAsync(y => y.RifasId == participantesDTO.RifasId);
+            var exist = await dbContext.Participantes.AnyAsync(z => z.Id == id);
 
             if (repetido && rifa)
             {
                 return BadRequest("Numero ya selecionado");
             }
 
-            if (participantes.Id != id)
+            if (!exist)
             {
                 return BadRequest("El id del participante no coincide con el establecido en la url");
             }
 
+            var participante = mapper.Map<Participantes>(participantesDTO);
+            participante.Id = id;
             
-            dbContext.Update(participantes);
+            dbContext.Update(participante);
             await dbContext.SaveChangesAsync();
-            return Ok();
+            return NoContent();
         }
 
         [HttpDelete("{id:int}")]

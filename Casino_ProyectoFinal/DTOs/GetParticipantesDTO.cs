@@ -1,10 +1,12 @@
-﻿using Casino_ProyectoFinal.Validaciones;
+﻿using Casino_ProyectoFinal.Entidades;
+using Casino_ProyectoFinal.Validaciones;
 using System.ComponentModel.DataAnnotations;
 
 namespace Casino_ProyectoFinal.DTOs
 {
-    public class ParticipantesDTO
+    public class GetParticipantesDTO
     {
+        public int Id { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es requerido")]
         [StringLength(maximumLength: 15, ErrorMessage = "El campo {0} solo puede tener un limite de 15 caracteres")]
@@ -17,5 +19,6 @@ namespace Casino_ProyectoFinal.DTOs
 
         [Required(ErrorMessage = "El campo {0} es requerido")]
         public int RifasId { get; set; }
+      
     }
 }

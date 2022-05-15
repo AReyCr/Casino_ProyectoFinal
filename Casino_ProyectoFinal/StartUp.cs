@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using System.Text.Json.Serialization;
+using Casino_ProyectoFinal.DTOs;
 
 namespace Casino_ProyectoFinal
 {
@@ -30,9 +31,9 @@ namespace Casino_ProyectoFinal
             options.UseSqlServer(Configuration.GetConnectionString("defaultConnection")));
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer();
-            //services.AddScoped<ICategory, CategoryRepository>();
-           // services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
             services.AddAutoMapper(typeof(StartUp));
+            
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen(c =>
             {

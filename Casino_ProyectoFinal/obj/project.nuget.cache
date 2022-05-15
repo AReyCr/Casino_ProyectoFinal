@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "qeovwgiXiySV72yRPBGuTScJRfQSo0b7oW+IHorGaM/adz1VeZLHmq1QjZPPdtLjsJs90nzA+GiGduZbe4uX5A==",
+  "dgSpecHash": "yQ31FKUZCtmOdjgVzlxocmzIpDezW6Ktoie4Mvjx5XQMQMiL10aBrmh8sZvLXNNlbJM3r6ntPkMX9Ah2bKO8zA==",
   "success": true,
   "projectFilePath": "B:\\ESCUELA\\BACK-END\\Casino_ProyectoFinal\\Casino_ProyectoFinal\\Casino_ProyectoFinal.csproj",
   "expectedPackageFiles": [
@@ -50,6 +50,7 @@
     "C:\\Users\\Usuario\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\6.3.1\\swashbuckle.aspnetcore.swaggerui.6.3.1.nupkg.sha512",
     "C:\\Users\\Usuario\\.nuget\\packages\\system.buffers\\4.5.1\\system.buffers.4.5.1.nupkg.sha512",
     "C:\\Users\\Usuario\\.nuget\\packages\\system.codedom\\4.4.0\\system.codedom.4.4.0.nupkg.sha512",
+    "C:\\Users\\Usuario\\.nuget\\packages\\system.collections\\4.3.0\\system.collections.4.3.0.nupkg.sha512",
     "C:\\Users\\Usuario\\.nuget\\packages\\system.configuration.configurationmanager\\5.0.0\\system.configuration.configurationmanager.5.0.0.nupkg.sha512",
     "C:\\Users\\Usuario\\.nuget\\packages\\system.diagnostics.diagnosticsource\\5.0.0\\system.diagnostics.diagnosticsource.5.0.0.nupkg.sha512",
     "C:\\Users\\Usuario\\.nuget\\packages\\system.drawing.common\\5.0.0\\system.drawing.common.5.0.0.nupkg.sha512",
