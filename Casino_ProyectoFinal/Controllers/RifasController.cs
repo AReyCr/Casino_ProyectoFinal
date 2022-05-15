@@ -11,8 +11,9 @@ namespace Casino_ProyectoFinal.Controllers
         private readonly ApplicationDbContext dbContext;
         private readonly ILogger<RifasController> logger;
 
-        public RifasController(ApplicationDbContext context, ILogger<ParticipantesController> logger)
+        public RifasController(ApplicationDbContext context, ILogger<RifasController> logger)
         {
+            this.logger = logger;
             this.dbContext = context;
         }
 
@@ -38,7 +39,7 @@ namespace Casino_ProyectoFinal.Controllers
             { 
                 return NotFound();
             }
-
+           
             return rifa;
         }
         /*

@@ -1,4 +1,7 @@
-﻿using Casino_ProyectoFinal.Entidades;
+﻿using AutoMapper;
+using Casino_ProyectoFinal.DTOs;
+using Casino_ProyectoFinal.Entidades;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,15 +9,18 @@ namespace Casino_ProyectoFinal.Controllers
 {
     [ApiController]
     [Route("api/Participantes")]
+   // [Authorize] // AUTORIZAR TODOS LOS METODOS
     public class ParticipantesController : ControllerBase
     {
         private readonly ApplicationDbContext dbContext;
         private readonly ILogger<ParticipantesController> logger;
+        private readonly IMapper mapper;
 
-        public ParticipantesController(ApplicationDbContext context, ILogger<ParticipantesController> logger)
+        public ParticipantesController(ApplicationDbContext context, ILogger<ParticipantesController> logger, IMapper mapper)
         {
             this.logger = logger;
             this.dbContext = context;
+            this.mapper = mapper;
         }
 
         [HttpPost]
@@ -34,30 +40,35 @@ namespace Casino_ProyectoFinal.Controllers
         
         }
 
+        /*
         [HttpGet]    // Get para datos relacionados ( RIFAS )
-        public async Task<ActionResult<List<Participantes>>> Get()
+        
+        public async Task<ActionResult<List<GetParticipantesDTO>>> Get()
         {
             logger.LogInformation("Se obtiene el listado de los participantes");
             logger.LogWarning("Mensaje de prueba warning");
-            return await dbContext.Participantes.Include(x => x.Rifas).ToListAsync();
+            var participantes = await dbContext.Participantes.Include(x => x.Rifas).ToListAsync();
+            return mapper.Map<List<GetParticipantesDTO>>(participantes);
         }
 
         
 
-        /*
+        
         [HttpGet]    // Get para datos relacionados ( REGISTROS )
         public async Task<ActionResult<List<Participantes>>> Get() 
         {
             return await dbContext.Participantes.Include(x=> x.Registro).ToListAsync();
         }
-
+        */
         
         [HttpGet]
-        public async Task<ActionResult<List<Participantes>>> Get()     Get para obtencion de datos sin relacion 
+        public async Task<ActionResult<List<GetParticipantesDTO>>> Get()   //  Get para obtencion de datos sin relacion 
         {
-            return await dbContext.Participantes.ToListAsync();
+            var participantes = await dbContext.Participantes.ToListAsync();
+            return mapper.Map<List<GetParticipantesDTO>>(participantes);
+     
         }
-        */
+       
 
         [HttpPut("{id:int}")]
         public async Task<ActionResult> Put(Participantes participantes, int id)
@@ -76,7 +87,7 @@ namespace Casino_ProyectoFinal.Controllers
                 return BadRequest("El id del participante no coincide con el establecido en la url");
             }
 
-
+            
             dbContext.Update(participantes);
             await dbContext.SaveChangesAsync();
             return Ok();
