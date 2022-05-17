@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Casino_ProyectoFinal.DTOs;
 using Casino_ProyectoFinal.Entidades;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -11,7 +12,7 @@ namespace Casino_ProyectoFinal.Controllers
 {
     [ApiController]
     [Route("api/Participantes")]
-   // [Authorize] // AUTORIZAR TODOS LOS METODOS
+    [Authorize(AuthenticationSchemes =JwtBearerDefaults.AuthenticationScheme, Policy ="EsAdmin")] 
     public class ParticipantesController : ControllerBase
     {
         private readonly ApplicationDbContext dbContext;
@@ -49,7 +50,7 @@ namespace Casino_ProyectoFinal.Controllers
 
         
         [HttpGet( Name="ObtenerParticipantes")]    // Get para datos relacionados ( RIFAS )
-        
+        //[AllowAnonymous] No pedir autorizacion 
         public async Task<ActionResult<List<GetParticipantesDTO>>> Get()
         {
             logger.LogInformation("Se obtiene el listado de los participantes");
