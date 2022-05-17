@@ -2,6 +2,7 @@
 using Casino_ProyectoFinal.DTOs;
 using Casino_ProyectoFinal.Entidades;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -115,5 +116,39 @@ namespace Casino_ProyectoFinal.Controllers
             await dbContext.SaveChangesAsync();
             return Ok();
         }
+
+        [HttpPatch("{id:int}")]
+        public async Task<ActionResult> Patch(int id, JsonPatchDocument<ParticipantesPatchDTO> patchDocument)
+        {
+            if (patchDocument == null)
+            {
+                return BadRequest();
+            }
+
+            var participantesDB = await dbContext.Participantes.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (participantesDB == null)
+            {
+                return NotFound();
+            }
+
+            var participantesDTO = mapper.Map<ParticipantesPatchDTO>(participantesDB);
+
+            patchDocument.ApplyTo(participantesDTO);
+
+            var isValid = TryValidateModel(participantesDTO);
+
+            if (!isValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            mapper.Map(participantesDTO, participantesDB);
+
+            await dbContext.SaveChangesAsync();
+
+            return NoContent();
+        }
+
     }
 }

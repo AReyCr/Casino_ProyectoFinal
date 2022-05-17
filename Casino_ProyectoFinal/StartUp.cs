@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using System.Text.Json.Serialization;
 using Casino_ProyectoFinal.DTOs;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace Casino_ProyectoFinal
 {
@@ -25,12 +28,20 @@ namespace Casino_ProyectoFinal
             {
                 opciones.Filters.Add(typeof(FiltroExcepcion));
             }).AddJsonOptions(x =>
-            x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+            x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles).AddNewtonsoftJson();
 
             services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("defaultConnection")));
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer();
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opciones=> opciones.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer=false,
+                ValidateAudience=false,
+                ValidateLifetime=true,
+                ValidateIssuerSigningKey=true,
+                IssuerSigningKey=new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Keyjwt"])),
+                ClockSkew = TimeSpan.Zero
+            });
 
             services.AddAutoMapper(typeof(StartUp));
             
@@ -39,8 +50,11 @@ namespace Casino_ProyectoFinal
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebAPICasino", Version = "v1" });
             });
+
+            services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
         }
 
+        
         
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -72,18 +72,18 @@ namespace Casino_ProyectoFinal.Controllers
         public async Task<ActionResult> Put(RifasDTO rifasDTO, int id)
         {
             var exist = await dbContext.Rifas.AnyAsync(x=> x.Id == id);
-            var exist2 = await dbContext.Rifas.AnyAsync(x => x.Nombre == rifasDTO.Nombre);
+           // var exist2 = await dbContext.Rifas.AnyAsync(y => y.Nombre == rifasDTO.Nombre);
 
             if (!exist)
             {
                 return BadRequest("Rifa no existente");
             }
 
-            if (!exist2)
+           /* if (!exist2)
             {
                 return BadRequest("Ya existe rifa con ese nombre");
             }
-
+           */
             var rifa = mapper.Map<Rifas>(rifasDTO);
 
             rifa.Id = id;
