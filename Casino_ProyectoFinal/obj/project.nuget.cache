@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "LNYuDN7Q/y/dK/+Bs6Q0BUGcpQ/o2EbIlxca8NQalfimE23Ecd1Um/QpdQQrZNUSvCzUH7pcnsyXd+CdXacjRg==",
+  "dgSpecHash": "nYLh8fmGMOCpu5n6CdVyoJRPEU/PyfFKkbjvBokW4VjnL7hQaEk+z9HphgscOTUG6NqCPyAKqYRiepeUqaW8LQ==",
   "success": true,
-  "projectFilePath": "B:\\ESCUELA\\BACK-END\\Casino_ProyectoFinal\\Casino_ProyectoFinal\\Casino_ProyectoFinal.csproj",
+  "projectFilePath": "C:\\Users\\Usuario\\Desktop\\Casino_ProyectoFinal\\Casino_ProyectoFinal\\Casino_ProyectoFinal.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Usuario\\.nuget\\packages\\automapper\\11.0.1\\automapper.11.0.1.nupkg.sha512",
     "C:\\Users\\Usuario\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\11.0.0\\automapper.extensions.microsoft.dependencyinjection.11.0.0.nupkg.sha512",

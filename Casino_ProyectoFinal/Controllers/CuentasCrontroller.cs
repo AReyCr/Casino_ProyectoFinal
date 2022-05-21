@@ -61,12 +61,13 @@ namespace Casino_ProyectoFinal.Controllers
             }
         }
 
+        /*
         [HttpGet("RenovarToken")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 
         public async Task<ActionResult<RespuestaAutenticacion>> Renovar()
         {
-            var emailClaim = HttpContext.User.Claims.Where(claim => claim.Type == "email").FirstOrDefault();
+            var emailClaim = HttpContext.User.Claims.Where(claim => claim.Type == "Email").FirstOrDefault();
             var email = emailClaim.Value;
 
             var credenciales = new CredencialUsuario()
@@ -76,20 +77,19 @@ namespace Casino_ProyectoFinal.Controllers
 
             return await ConstruirToken(credenciales);
         }
+        */
 
         private async Task<RespuestaAutenticacion> ConstruirToken(CredencialUsuario credencialUsuario)
         {
             var claims = new List<Claim>
             {
-                new Claim("email", credencialUsuario.Email),
-                new Claim("claimprueba", "Esta prueba")
+                new Claim("email", credencialUsuario.Email)
             };
 
             var usuario = await userManager.FindByEmailAsync(credencialUsuario.Email);
             var claimsDB = await userManager.GetClaimsAsync(usuario);
 
             claims.AddRange(claimsDB);
-
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["keyjwt"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);

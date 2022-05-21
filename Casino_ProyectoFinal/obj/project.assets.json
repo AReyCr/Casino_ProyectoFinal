@@ -3719,11 +3719,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "B:\\ESCUELA\\BACK-END\\Casino_ProyectoFinal\\Casino_ProyectoFinal\\Casino_ProyectoFinal.csproj",
+      "projectUniqueName": "C:\\Users\\Usuario\\Desktop\\Casino_ProyectoFinal\\Casino_ProyectoFinal\\Casino_ProyectoFinal.csproj",
       "projectName": "Casino_ProyectoFinal",
-      "projectPath": "B:\\ESCUELA\\BACK-END\\Casino_ProyectoFinal\\Casino_ProyectoFinal\\Casino_ProyectoFinal.csproj",
+      "projectPath": "C:\\Users\\Usuario\\Desktop\\Casino_ProyectoFinal\\Casino_ProyectoFinal\\Casino_ProyectoFinal.csproj",
       "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
-      "outputPath": "B:\\ESCUELA\\BACK-END\\Casino_ProyectoFinal\\Casino_ProyectoFinal\\obj\\",
+      "outputPath": "C:\\Users\\Usuario\\Desktop\\Casino_ProyectoFinal\\Casino_ProyectoFinal\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config",

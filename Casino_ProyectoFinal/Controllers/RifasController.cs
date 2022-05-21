@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Casino_ProyectoFinal.DTOs;
 using Casino_ProyectoFinal.Entidades;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,6 +10,7 @@ namespace Casino_ProyectoFinal.Controllers
 {
     [ApiController]
     [Route("api/Rifas")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "EsAdmin")]
     public class RifasController : ControllerBase
     {
         private readonly ApplicationDbContext dbContext;
