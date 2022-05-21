@@ -111,5 +111,19 @@ namespace Casino_ProyectoFinal.Controllers
             await dbContext.SaveChangesAsync();
             return Ok();
         }
+
+        [HttpDelete("ELiminarParticipante")]
+        public async Task<ActionResult> DeletebyId(int id)
+        {
+            var exist = await dbContext.Participantes.AnyAsync(x => x.Id == id);
+            if (!exist)
+            {
+                return NotFound("El recurso no fue encontrado");
+            }
+
+            dbContext.Remove(new Participantes { Id = id });
+            await dbContext.SaveChangesAsync();
+            return Ok();
+        }
     }
 }

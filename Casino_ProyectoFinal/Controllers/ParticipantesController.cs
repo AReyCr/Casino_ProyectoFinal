@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Casino_ProyectoFinal.Controllers;
 using System.Collections.Generic;
 
 namespace Casino_ProyectoFinal.Controllers
@@ -27,7 +28,8 @@ namespace Casino_ProyectoFinal.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] ParticipantesDTO participantesDto)
+        public async Task<ActionResult> Post ( ParticipantesDTO participantesDto //[FromQuery]RifasDTO rifasDto
+                                                                                  )
         {
             var repetido = await dbContext.Participantes.AnyAsync(x => x.NumeroSeleccion == participantesDto.NumeroSeleccion);
             var rifa = await dbContext.Participantes.AnyAsync(y => y.RifasId == participantesDto.RifasId);
@@ -36,7 +38,19 @@ namespace Casino_ProyectoFinal.Controllers
             {
                 return BadRequest("Numero ya selecionado");
             }
-
+           /*
+            else
+            {
+                for (int i = 0; i < 54; i++)
+                {
+                    if (participantesDto.NumeroSeleccion == rifasDto.NumerosDisponible[i])
+                    {
+                        var w = rifasDto.NumerosDisponible[i];
+                       dbContext.Rifas.Remove(w);
+                    }
+                }
+            }
+            */
             var participante = mapper.Map<Participantes>(participantesDto);
 
             dbContext.Add(participante);
@@ -48,7 +62,32 @@ namespace Casino_ProyectoFinal.Controllers
         
         }
 
-        
+        [HttpGet("ConsultaRifa")]
+        public async Task<ActionResult<RifasDTO>> GetById(int id)
+        {
+            var rifa = await dbContext.Rifas.FirstOrDefaultAsync(x => x.Id == id);
+            if (rifa == null)
+            {
+                return NotFound();
+            }
+
+            return mapper.Map<RifasDTO>(rifa);
+        }
+
+        [HttpGet("NumerosDisponibles")]  // OBTENER SOLAMENTE DISPONIBLES
+        public async Task<ActionResult<RifasDTO>> Get(int id)
+        {
+            var rifa = await dbContext.Rifas.FirstOrDefaultAsync(x => x.Id == id);
+            if (rifa == null)
+            {
+                return NotFound();
+            }
+
+            return mapper.Map<RifasDTO>(rifa.NumerosDisponible[1]);
+
+        }
+
+        /*
         [HttpGet( Name="ObtenerParticipantes")]    // Get para datos relacionados ( RIFAS )
         //[AllowAnonymous] No pedir autorizacion 
         public async Task<ActionResult<List<GetParticipantesDTO>>> Get()
@@ -61,7 +100,7 @@ namespace Casino_ProyectoFinal.Controllers
 
 
 
-        /*
+        
         [HttpGet]    // Get para datos relacionados ( REGISTROS )
         public async Task<ActionResult<List<Participantes>>> Get() 
         {
@@ -76,7 +115,7 @@ namespace Casino_ProyectoFinal.Controllers
             return mapper.Map<List<GetParticipantesDTO>>(participantes);
    
         }
-       */
+      
 
         [HttpPut("{id:int}")]
         public async Task<ActionResult> Put(ParticipantesDTO participantesDTO, int id)
@@ -104,19 +143,7 @@ namespace Casino_ProyectoFinal.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{id:int}")]
-        public async Task<ActionResult> Delete(int id)
-        {
-            var exist = await dbContext.Participantes.AnyAsync(x => x.Id == id);
-            if (!exist)
-            {
-                return NotFound("El recurso no fue encontrado");
-            }
-            
-            dbContext.Remove(new Participantes { Id = id });
-            await dbContext.SaveChangesAsync();
-            return Ok();
-        }
+        
 
         [HttpPatch("{id:int}")]
         public async Task<ActionResult> Patch(int id, JsonPatchDocument<ParticipantesPatchDTO> patchDocument)
@@ -150,6 +177,7 @@ namespace Casino_ProyectoFinal.Controllers
 
             return NoContent();
         }
+         */
 
     }
 }
