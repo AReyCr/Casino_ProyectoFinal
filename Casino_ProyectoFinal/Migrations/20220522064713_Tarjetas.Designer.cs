@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Casino_ProyectoFinal.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220522001839_Tarjetas")]
+    [Migration("20220522064713_Tarjetas")]
     partial class Tarjetas
     {
         /// <inheritdoc />

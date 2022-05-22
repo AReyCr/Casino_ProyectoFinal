@@ -25,7 +25,7 @@ namespace Casino_ProyectoFinal.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody]RifasDTO rifasDto, int id)
+        public async Task<ActionResult> Post([FromBody]RifasDTO rifasDto)
         {
             var exist = await dbContext.Rifas.AnyAsync(x => x.Nombre == rifasDto.Nombre);
           //  var max = await dbContext.Rifas.MaxAsync(y => y.Id = id);
@@ -75,10 +75,12 @@ namespace Casino_ProyectoFinal.Controllers
             {
                 return NotFound();
             }
-
+            /*
             var participante = mapper.Map<TarjetasDTO>(tarjetasDto);
-            dbContext.Update(participante);
-            return Ok();
+            dbContext.Add(tarjetasDto);
+            await dbContext.SaveChangesAsync();
+            */
+            return mapper.Map<ParticipantesDTO>(tarjetasDto);
         }
 
         /*

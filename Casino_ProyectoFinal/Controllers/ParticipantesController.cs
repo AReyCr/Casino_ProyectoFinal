@@ -28,8 +28,8 @@ namespace Casino_ProyectoFinal.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post ( ParticipantesDTO participantesDto //[FromQuery]RifasDTO rifasDto
-                                                                                  )
+        public async Task<ActionResult> Post ( ParticipantesDTO participantesDto, [FromQuery]RifasDTO rifasDto
+                                                                         )
         {
             var repetido = await dbContext.Participantes.AnyAsync(x => x.NumeroSeleccion == participantesDto.NumeroSeleccion);
             var rifa = await dbContext.Participantes.AnyAsync(y => y.RifasId == participantesDto.RifasId);
@@ -40,19 +40,22 @@ namespace Casino_ProyectoFinal.Controllers
             }
 
 
-           /*
-            else
-            {
-                for (int i = 0; i < 54; i++)
-                {
-                    if (participantesDto.NumeroSeleccion == rifasDto.NumerosDisponible[i])
-                    {
-                        var w = rifasDto.NumerosDisponible[i];
-                       dbContext.Rifas.Remoeeve(w);
-                    }
-                }
-            }
-            */
+            /*
+             else
+             {
+                 for (int i = 0; i < 54; i++)
+                 {
+                     if (participantesDto.NumeroSeleccion == rifasDto.NumerosDisponible[i])
+                     {
+                         var w = rifasDto.NumerosDisponible[i];
+                        dbContext.Rifas.Remoeeve(w);
+                     }
+                 }
+             }
+             */
+
+           // var resta = await dbContext.Rifas.AnyAsync(rifasDto.Disponible - 1);
+
             var participante = mapper.Map<Participantes>(participantesDto);
 
             dbContext.Add(participante);

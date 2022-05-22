@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Casino_ProyectoFinal.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220521065939_Rifas")]
+    [Migration("20220522064052_Rifas")]
     partial class Rifas
     {
         /// <inheritdoc />
@@ -107,6 +107,35 @@ namespace Casino_ProyectoFinal.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Rifas");
+                });
+
+            modelBuilder.Entity("Casino_ProyectoFinal.Entidades.Tarjetas", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("ParticipanteId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ParticipantesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RifaId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("RifasId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ParticipantesId");
+
+                    b.HasIndex("RifasId");
+
+                    b.ToTable("Tarjetas");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -314,6 +343,21 @@ namespace Casino_ProyectoFinal.Migrations
                         .HasForeignKey("RifasId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Rifas");
+                });
+
+            modelBuilder.Entity("Casino_ProyectoFinal.Entidades.Tarjetas", b =>
+                {
+                    b.HasOne("Casino_ProyectoFinal.Entidades.Participantes", "Participantes")
+                        .WithMany()
+                        .HasForeignKey("ParticipantesId");
+
+                    b.HasOne("Casino_ProyectoFinal.Entidades.Rifas", "Rifas")
+                        .WithMany()
+                        .HasForeignKey("RifasId");
+
+                    b.Navigation("Participantes");
 
                     b.Navigation("Rifas");
                 });
