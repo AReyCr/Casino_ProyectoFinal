@@ -38,6 +38,8 @@ namespace Casino_ProyectoFinal.Controllers
             {
                 return BadRequest("Numero ya selecionado");
             }
+
+
            /*
             else
             {
@@ -46,7 +48,7 @@ namespace Casino_ProyectoFinal.Controllers
                     if (participantesDto.NumeroSeleccion == rifasDto.NumerosDisponible[i])
                     {
                         var w = rifasDto.NumerosDisponible[i];
-                       dbContext.Rifas.Remove(w);
+                       dbContext.Rifas.Remoeeve(w);
                     }
                 }
             }
@@ -58,8 +60,7 @@ namespace Casino_ProyectoFinal.Controllers
 
             var participantesDTO = mapper.Map<GetParticipantesDTO>(participante);
 
-            return CreatedAtRoute("ObtenerParticipantes", new {id=participante.Id}, participantesDTO);
-        
+            return Ok();
         }
 
         [HttpGet("ConsultaRifa")]
@@ -142,8 +143,8 @@ namespace Casino_ProyectoFinal.Controllers
             await dbContext.SaveChangesAsync();
             return NoContent();
         }
+          */
 
-        
 
         [HttpPatch("{id:int}")]
         public async Task<ActionResult> Patch(int id, JsonPatchDocument<ParticipantesPatchDTO> patchDocument)
@@ -177,7 +178,7 @@ namespace Casino_ProyectoFinal.Controllers
 
             return NoContent();
         }
-         */
+       
 
     }
 }

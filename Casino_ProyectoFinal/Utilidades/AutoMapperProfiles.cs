@@ -9,12 +9,14 @@ namespace Casino_ProyectoFinal.Utilidades
         public AutoMapperProfiles()
         {
             CreateMap<ParticipantesDTO, Participantes>();
+            CreateMap<Participantes, ParticipantesDTO>();
             CreateMap<Participantes, GetParticipantesDTO>();
             CreateMap<RifasDTO, Rifas>();
             CreateMap<Rifas, GetRifasDTO>();
             CreateMap<Rifas, RifasDTO>();
             CreateMap<Participantes, ParticipantesPatchDTO>();
             CreateMap<Int32, RifasDTO>();
+            CreateMap<Participantes, TarjetasDTO>();
         }
     }
 }

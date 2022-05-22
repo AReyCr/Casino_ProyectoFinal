@@ -21,5 +21,7 @@ namespace Casino_ProyectoFinal
 
         public DbSet<RespuestaAutenticacion> respuestaAutenticaciones { get; set; }
 
+        public DbSet<Tarjetas> Tarjetas { get; set; }
+
     }
 }

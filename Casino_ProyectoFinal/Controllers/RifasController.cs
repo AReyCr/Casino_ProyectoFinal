@@ -25,10 +25,10 @@ namespace Casino_ProyectoFinal.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody]RifasDTO rifasDto)
+        public async Task<ActionResult> Post([FromBody]RifasDTO rifasDto, int id)
         {
             var exist = await dbContext.Rifas.AnyAsync(x => x.Nombre == rifasDto.Nombre);
-
+          //  var max = await dbContext.Rifas.MaxAsync(y => y.Id = id);
             if (exist)
             {
                 return BadRequest("Ya existe rifa con ese nombre");
@@ -50,7 +50,7 @@ namespace Casino_ProyectoFinal.Controllers
             var rifas = await dbContext.Rifas.ToListAsync();
             return mapper.Map<List<GetRifasDTO>>(rifas);
         }
-
+        /*
         [HttpGet("{id:int}", Name = "ObtenerRifa")]
         public async Task<ActionResult<RifasDTO>> GetById(int id)
         {
@@ -62,6 +62,25 @@ namespace Casino_ProyectoFinal.Controllers
            
             return mapper.Map<RifasDTO>(rifa);
         }
+        */ 
+        [HttpGet("{id:int}", Name = "Random")] // GUARDAR TARJETA
+        public async Task<ActionResult<ParticipantesDTO>> Get(int id)
+        {
+            var rifa = await dbContext.Rifas.FirstOrDefaultAsync(x => x.Id == id);
+            Random rand = new Random();
+            int toSkip = rand.Next(1, 2);
+            dbContext.Participantes.Skip(toSkip).Take(1).First();
+            var tarjetasDto = await dbContext.Participantes.OrderBy(y => Guid.NewGuid()).Skip(toSkip).Take(1).FirstOrDefaultAsync();
+            if (rifa == null)
+            {
+                return NotFound();
+            }
+
+            var participante = mapper.Map<TarjetasDTO>(tarjetasDto);
+            dbContext.Update(participante);
+            return Ok();
+        }
+
         /*
         [HttpGet("NumerosDisponibles /{id]")]    // Metodo pendiente oara mostrar el listado de numeros disponibles de la r
         public async Task<ActionResult<Rifas>> Get(int id)
