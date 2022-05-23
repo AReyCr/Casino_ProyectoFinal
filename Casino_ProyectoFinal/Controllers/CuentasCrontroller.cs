@@ -57,7 +57,7 @@ namespace Casino_ProyectoFinal.Controllers
             }
             else
             {
-                return BadRequest("Login Incorrecto");
+                return BadRequest("Datos Incorrectos");
             }
         }
 

@@ -3,6 +3,7 @@ using Casino_ProyectoFinal.DTOs;
 using Casino_ProyectoFinal.Entidades;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,10 +26,10 @@ namespace Casino_ProyectoFinal.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody]RifasDTO rifasDto)
+        public async Task<ActionResult> Post([FromBody] RifasDTO rifasDto)
         {
             var exist = await dbContext.Rifas.AnyAsync(x => x.Nombre == rifasDto.Nombre);
-          //  var max = await dbContext.Rifas.MaxAsync(y => y.Id = id);
+            //  var max = await dbContext.Rifas.MaxAsync(y => y.Id = id);
             if (exist)
             {
                 return BadRequest("Ya existe rifa con ese nombre");
@@ -41,7 +42,7 @@ namespace Casino_ProyectoFinal.Controllers
 
             var rifasDTO = mapper.Map<GetRifasDTO>(rifa);
 
-            return CreatedAtRoute("ObtonerRifa", new {id=rifa.Id}, rifasDTO);
+            return CreatedAtRoute("ObtonerRifa", new { id = rifa.Id }, rifasDTO);
         }
 
         [HttpGet]
@@ -62,15 +63,20 @@ namespace Casino_ProyectoFinal.Controllers
            
             return mapper.Map<RifasDTO>(rifa);
         }
-        */ 
-        [HttpGet("{id:int}", Name = "Random")] // GUARDAR TARJETA
+        */
+        [HttpGet("Ganador" )] // GUARDAR TARJETA
         public async Task<ActionResult<ParticipantesDTO>> Get(int id)
         {
             var rifa = await dbContext.Rifas.FirstOrDefaultAsync(x => x.Id == id);
             Random rand = new Random();
-            int toSkip = rand.Next(1, 2);
+            int toSkip = rand.Next(1,dbContext.Participantes.Count());
             dbContext.Participantes.Skip(toSkip).Take(1).First();
             var tarjetasDto = await dbContext.Participantes.OrderBy(y => Guid.NewGuid()).Skip(toSkip).Take(1).FirstOrDefaultAsync();
+            if (id == tarjetasDto.RifasId)
+            {
+                return  mapper.Map<ParticipantesDTO>(tarjetasDto);
+            }
+           
             if (rifa == null)
             {
                 return NotFound();
@@ -80,7 +86,8 @@ namespace Casino_ProyectoFinal.Controllers
             dbContext.Add(tarjetasDto);
             await dbContext.SaveChangesAsync();
             */
-            return mapper.Map<ParticipantesDTO>(tarjetasDto);
+
+            return Ok();
         }
 
         /*
@@ -114,6 +121,38 @@ namespace Casino_ProyectoFinal.Controllers
 
             dbContext.Update(rifa);
             await dbContext.SaveChangesAsync();
+            return NoContent();
+        }
+        [HttpPatch("{id:int}")]
+        public async Task<ActionResult> Patch(int id, JsonPatchDocument<ParticipantesPatchDTO> patchDocument)
+        {
+            if (patchDocument == null)
+            {
+                return BadRequest();
+            }
+
+            var participantesDB = await dbContext.Participantes.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (participantesDB == null)
+            {
+                return NotFound();
+            }
+
+            var participantesDTO = mapper.Map<ParticipantesPatchDTO>(participantesDB);
+
+            patchDocument.ApplyTo(participantesDTO);
+
+            var isValid = TryValidateModel(participantesDTO);
+
+            if (!isValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            mapper.Map(participantesDTO, participantesDB);
+
+            await dbContext.SaveChangesAsync();
+
             return NoContent();
         }
 

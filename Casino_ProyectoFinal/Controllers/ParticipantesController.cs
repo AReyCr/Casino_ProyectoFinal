@@ -28,7 +28,7 @@ namespace Casino_ProyectoFinal.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post ( ParticipantesDTO participantesDto, [FromQuery]RifasDTO rifasDto
+        public async Task<ActionResult> Post ( ParticipantesDTO participantesDto//[FromQuery]RifasDTO rifasDto
                                                                          )
         {
             var repetido = await dbContext.Participantes.AnyAsync(x => x.NumeroSeleccion == participantesDto.NumeroSeleccion);
@@ -149,38 +149,7 @@ namespace Casino_ProyectoFinal.Controllers
           */
 
 
-        [HttpPatch("{id:int}")]
-        public async Task<ActionResult> Patch(int id, JsonPatchDocument<ParticipantesPatchDTO> patchDocument)
-        {
-            if (patchDocument == null)
-            {
-                return BadRequest();
-            }
-
-            var participantesDB = await dbContext.Participantes.FirstOrDefaultAsync(x => x.Id == id);
-
-            if (participantesDB == null)
-            {
-                return NotFound();
-            }
-
-            var participantesDTO = mapper.Map<ParticipantesPatchDTO>(participantesDB);
-
-            patchDocument.ApplyTo(participantesDTO);
-
-            var isValid = TryValidateModel(participantesDTO);
-
-            if (!isValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            mapper.Map(participantesDTO, participantesDB);
-
-            await dbContext.SaveChangesAsync();
-
-            return NoContent();
-        }
+       
        
 
     }
