@@ -42,10 +42,10 @@ namespace Casino_ProyectoFinal.Controllers
 
             var rifasDTO = mapper.Map<GetRifasDTO>(rifa);
 
-            return CreatedAtRoute("ObtonerRifa", new { id = rifa.Id }, rifasDTO);
+            return CreatedAtRoute("ObtenerRifa", new { id = rifa.Id }, rifasDTO);
         }
 
-        [HttpGet]
+        [HttpGet(Name ="ObtenerRifa")]
         public async Task<ActionResult<List<GetRifasDTO>>> GetAll()
         {
             var rifas = await dbContext.Rifas.ToListAsync();

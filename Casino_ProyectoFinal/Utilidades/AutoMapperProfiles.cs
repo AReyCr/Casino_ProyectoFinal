@@ -17,6 +17,7 @@ namespace Casino_ProyectoFinal.Utilidades
             CreateMap<Participantes, ParticipantesPatchDTO>();
             CreateMap<Int32, RifasDTO>();
             CreateMap<Participantes, TarjetasDTO>();
+            CreateMap<ParticipantesPatchDTO, Participantes>();
         }
     }
 }

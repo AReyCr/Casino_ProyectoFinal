@@ -13,7 +13,7 @@ namespace Casino_ProyectoFinal.Controllers
 {
     [ApiController]
     [Route("api/Participantes")]
-    [Authorize(AuthenticationSchemes =JwtBearerDefaults.AuthenticationScheme, Policy ="EsAdmin")] 
+    [Authorize(AuthenticationSchemes =JwtBearerDefaults.AuthenticationScheme)] 
     public class ParticipantesController : ControllerBase
     {
         private readonly ApplicationDbContext dbContext;
@@ -67,15 +67,10 @@ namespace Casino_ProyectoFinal.Controllers
         }
 
         [HttpGet("ConsultaRifa")]
-        public async Task<ActionResult<RifasDTO>> GetById(int id)
+        public async Task<ActionResult<List<GetRifasDTO>>> GetAll()
         {
-            var rifa = await dbContext.Rifas.FirstOrDefaultAsync(x => x.Id == id);
-            if (rifa == null)
-            {
-                return NotFound();
-            }
-
-            return mapper.Map<RifasDTO>(rifa);
+            var rifas = await dbContext.Rifas.ToListAsync();
+            return mapper.Map<List<GetRifasDTO>>(rifas);
         }
 
         [HttpGet("NumerosDisponibles")]  // OBTENER SOLAMENTE DISPONIBLES
